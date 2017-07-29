@@ -1,4 +1,5 @@
 node_modules/**/*
 .expo/*
+env.sh
 npm-debug.*
 env.sh
