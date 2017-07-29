@@ -7,26 +7,37 @@ mongoose.connect(connect);
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    username: String,
+    facebookId: String,
     password: String,
+    name: String,
     age: Number,
     location: String,
     gender: String,
     myCards: Array,
-    viewedCards: Array,
-    pendingCards: Array
+    stylePoints: Number,
+    history: [
+        {
+            card: {
+                ref: Card,
+                type: Schema.Types.ObjectId
+            },
+            myVote: Number,
+        }
+    ],
 });
 
 var cardSchema = new Schema({
-    author: {   //populate userData relevent to card
+    author: {   // populate userData relevent to card
         ref: User,
         type: Schema.Types.ObjectId,
     },
+    dateCreated: Date,
+    finalDecision: Number, // what the poster decided, 0 is undecided 1 is first choice, 2 is second choice
     imageA: String,
     imageB: String,
-    votesA: Number,
-    votesB: Number,
-    voters: Array
+    votesA: Array, // userIds
+    votesB: Array,  // userIDs
+    views: Array,
 });
 
 // userSchema.plugin(findOrCreate);
