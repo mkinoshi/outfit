@@ -13,8 +13,8 @@ var userSchema = new Schema({
     location: String,
     gender: String,
     myCards: Array,
-    viewedCards: Array,
-    pendingCards: Array
+    viewedCards: Array
+    // pendingCards: Array
 });
 
 var cardSchema = new Schema({
@@ -26,7 +26,8 @@ var cardSchema = new Schema({
     imageB: String,
     votesA: Number,
     votesB: Number,
-    voters: Array
+    voters: Array,
+    live: Boolean
 });
 
 // userSchema.plugin(findOrCreate);
