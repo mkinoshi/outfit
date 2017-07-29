@@ -8,19 +8,25 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
     facebookId: String,
-    password: String,
     name: String,
     age: Number,
     location: String,
     gender: String,
-    myCards: Array,
+    myCards: [
+        card: {
+            ref: 'Card',
+            type: Schema.Types.ObjectId
+        }
+    ],
     stylePoints: Number,
     history: [
         {
             card: {
-                ref: Card,
+                ref: 'Card',
                 type: Schema.Types.ObjectId
             },
+            dateVoted: Date,
+            correctness: Boolean,
             myVote: Number,
         }
     ],
@@ -28,7 +34,7 @@ var userSchema = new Schema({
 
 var cardSchema = new Schema({
     author: {   // populate userData relevent to card
-        ref: User,
+        ref: 'User',
         type: Schema.Types.ObjectId,
     },
     dateCreated: Date,
