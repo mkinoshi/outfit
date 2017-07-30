@@ -10,19 +10,18 @@ class Main extends React.Component {
     //access to userId
     //this.props.getOrCreate(this.props.facebookId, this.props.name)
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.facebookId) {
       nextProps.getOrCreate(nextProps.facebookId, nextProps.name)
     }
   }
+
   render() {
     return (
-      <View style={{width: width}}>
+      <View >
         <Header style={{top: '0'}}/>
-        <View style={styles.outer}>
-          <Text>This is main</Text>
-        </View>
-      <VoterMain style={styles.outer}/>
+        <VoterMain style={{top: '80'}}/>
       </View>
     )
   }
@@ -31,7 +30,8 @@ class Main extends React.Component {
 const styles = {
   outer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'column',
+    width: width
   }
 }
 

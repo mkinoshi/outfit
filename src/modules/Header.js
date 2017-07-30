@@ -26,7 +26,7 @@ export default class Main extends React.Component {
 
   render() {
     return (
-       <Container style={{top: 0}}>
+       <Container style={{top: 0, flex: 1}}>
         <Header style={{backgroundColor: 'white'}}>
           <Left>
             <Button transparent>

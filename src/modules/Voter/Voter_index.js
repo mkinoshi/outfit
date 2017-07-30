@@ -20,8 +20,8 @@ class VoterMain extends React.Component {
   	console.log('got to VoterMain');
     return (
       <View style={styles.outer}>
-	    <Card style={styles.card}/>
-	    <StylePoints style={styles.stylePoints}/>
+  	    <Card style={styles.card}/>
+  	    <StylePoints style={styles.stylePoints}/>
       </View>
     )
   }
@@ -29,11 +29,10 @@ class VoterMain extends React.Component {
 
 const styles = {
 	outer: {
-		display: 'flex',
-		flexDirection: 'column',
-		flex: 1,
+    top: 60,
+    height: height-60,
 		width: width
-	},
+	}
 }
 
 const mapStateToProps = (state) => ({
