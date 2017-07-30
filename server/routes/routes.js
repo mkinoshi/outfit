@@ -122,7 +122,6 @@ router.post('/vote', function(req, res, next) {
 
 })
 
-
 ///////////////////////////// END OF PUBLIC ROUTES /////////////////////////////
 
 router.use(function(req, res, next){
