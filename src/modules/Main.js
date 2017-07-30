@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions } from 'react-
 import {getUserThunk} from '../thunks/getUserThunk';
 import Header from './Header.js';
 const {height, width} = Dimensions.get('window');
+import VoterMain from './Voter/Voter_index';
 class Main extends React.Component {
   componentDidMount() {
     //access to userId
@@ -21,6 +22,7 @@ class Main extends React.Component {
         <View style={styles.outer}>
           <Text>This is main</Text>
         </View>
+      <VoterMain style={styles.outer}/>
       </View>
     )
   }
@@ -28,7 +30,8 @@ class Main extends React.Component {
 
 const styles = {
   outer: {
-    marginTop: 50
+    flex: 1,
+    flexDirection: 'row'
   }
 }
 
