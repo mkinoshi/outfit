@@ -14,9 +14,10 @@ class InitView extends React.Component {
     .then((user) => {
       console.log("yoyoyoyoyoyoy")
       console.log(user);
-      if (user) {
+      const data = JSON.parse(user);
+      if (data) {
         // this.props.onLogin(data); // access to database ?
-        this.props.setLogin(user.id, user.name);
+        this.props.setLogin(data.id, data.name);
         // this.props.getOrCreate(user, null, null);
       } else {
         this.props.openLogin();

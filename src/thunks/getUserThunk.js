@@ -11,7 +11,8 @@ export const getUserThunk = (userId, name) => (dispatch) => {
        })
        .then((response) => {
           console.log(response);
-          dispatch({type: 'LOAD_USER_DONE', data: response.data.user})
+          console.log(response.data);
+          dispatch({type: 'LOAD_USER_DONE', data: response.data})
        })
        .catch((err) => {
          dispatch({type: 'LOAD_USER_ERROR'})

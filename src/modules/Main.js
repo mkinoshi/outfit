@@ -6,17 +6,10 @@ import {getUserThunk} from '../thunks/getUserThunk';
 class Main extends React.Component {
   componentDidMount() {
     //access to userId
-    console.log("hhrhrhrhrhr");
-    console.log(this.props);
-    console.log(this.props.facebookId);
-    console.log( this.props.name);
-    this.props.getOrCreate(this.props.facebookId, this.props.name)
+    //this.props.getOrCreate(this.props.facebookId, this.props.name)
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.facebookId) {
-      console.log(nextProps.facebookId);
-      console.log( nextProps.name);
       nextProps.getOrCreate(nextProps.facebookId, nextProps.name)
     }
   }

@@ -5,6 +5,8 @@ const userReducer = (state = {
 }, action) => {
   switch(action.type) {
     case 'GET_USER_DATA_DONE':
+      console.log('inside the user reducer');
+      console.log(action)
       return {
         ...state,
         isLoggedIn: true,
