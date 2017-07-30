@@ -31,14 +31,16 @@ class InitView extends React.Component {
   render() {
     console.log(this.props);
     return(
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View>
         {this.props.isLoggedIn ? 
         <Main />:
-        <Button
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Button
           onPress={() => this.props.onLogin()}
           title="Continue with fb"
           color="#4267B2"
         />
+        </View>
         }
       </View>
     )
