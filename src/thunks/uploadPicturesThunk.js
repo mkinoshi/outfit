@@ -54,6 +54,7 @@ export const uploadPicturesThunk = (first, second, id) => (dispatch) => {
       })
       .then((resp) => {
         console.log(resp);
+        dispatch({type: 'UPDATE_MY_POSTS', card: resp.data.card})
       })
       .catch((err) => {
         console.log(err);
