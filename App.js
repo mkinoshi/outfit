@@ -1,3 +1,4 @@
+import Expo from 'expo'
 import React from 'react';
 import { StyleSheet, Text, View, Navigator } from 'react-native';
 import {createStore} from 'redux';
@@ -11,6 +12,7 @@ const store = createStore(rootReducer);
 const ROUTES = {
   initView: InitView
 }
+
 
 export default class App extends React.Component {
 
