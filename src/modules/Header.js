@@ -28,11 +28,17 @@ class Main extends React.Component {
   }
 
   render() {
+    let backArrow = false;
+    if ((this.props.page === 'voterResults') || (this.props.page === 'posterResults')) {
+      backArrow = true;
+      console.log('went in here');
+    }
     return (
        <Container style={{top: 0, zIndex: 5}}>
         <Header style={{backgroundColor: 'white'}} >
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => this.props.handleBack()}>
+              {backArrow ? <Icon name='arrow-back' /> : null}
               {/* <Icon name='arrow-back' /> */}
             </Button>
           </Left>

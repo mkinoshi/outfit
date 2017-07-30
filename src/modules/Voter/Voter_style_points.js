@@ -14,10 +14,6 @@ class StylePoints extends React.Component {
     };
   }
 
-  static navigationOptions = {
-    title: 'Voter Results',
-  };
-
   componentDidMount() {
     //access to userId
     //this.props.getOrCreate(this.props.facebookId, this.props.name)

@@ -27,71 +27,13 @@ class VoterResultsBanner extends React.Component {
   render() {
     return (
       <View style={{zIndex: 0}}>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          style={{marginTop: 60}}
-          maxHeight={height-60}
-          >
-         <View style={{marginTop: 260}}>
-          <View>
-
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible();
-            }}>
-              <Text style={{textAlign: 'right'}}>X</Text>
-            </TouchableHighlight>
-
-            <View style={styles.container}>
-              <View style={styles.card}> 
-               <View style={styles.outfit}>
-                <Image
-                style={styles.image}
-                source={{url: 'http://images.askmen.com/fashion/style_icon/33_style-icon-brad-pitt.jpg'}}
-                />
-                <Text style={styles.text}>45%</Text>
-                <Text style={{fontSize: 20}}>Your pick</Text>
-              </View>
-              <View style={styles.outfit}>
-                <Image
-                style={styles.image}
-                source={{url: 'https://s-media-cache-ak0.pinimg.com/736x/37/f3/c8/37f3c8e9620f07a7383b7363248abf7b--brad-pitt--brad-pitt-news.jpg'}}
-                />
-                <Text style={styles.text}>55%</Text>
-              </View>  
-              </View>
-              <View style={styles.card}> 
-                  <View style={styles.outfit}>
-                    <Image
-                    style={styles.image}
-                    source={{url: 'http://images.complex.com/complex/image/upload/c_limit,w_680/fl_lossy,pg_1,q_auto/arx5z1k5yvtauzsk6pna.jpg'}}
-                    />
-                    <Text style={styles.text}>73%</Text>
-                  </View>
-                  <View style={styles.outfit}>
-                    <Image
-                    style={styles.image}
-                    source={{url: 'https://s-media-cache-ak0.pinimg.com/736x/f6/ec/44/f6ec44d56a98ea927d5d4ead5cfcf40a--espn-the-magazine-magazine-photos.jpg'}}
-                    />
-                    <Text style={styles.text}>27%</Text>
-                  </View>
-              </View>
-            </View>
-
-          </View>
-         </View>
-        </Modal>
-
-
-
-        <TouchableHighlight
+        <View
         style={styles.stylePoints}
         onPress={() => {
           this.setModalVisible();
         }}>
-          <Text>Style Points: (style points)</Text>
-        </TouchableHighlight>
+          <Text>Your/Poster's Pick</Text>
+        </View>
 
       </View>
     )

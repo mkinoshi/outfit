@@ -41,6 +41,14 @@ class Main extends React.Component {
     }
   }
 
+  handleBack() {
+    if (this.state.page === 'voterResults') {
+      this.setState({page: 'voter'});
+    } else {
+      this.setState({page: 'poster'});
+    }
+  }
+
   historyToggle() {
     if (this.state.page === 'voter') {
       this.setState({page: 'voterResults'});
@@ -52,7 +60,11 @@ class Main extends React.Component {
   render() {
     return (
       <View >
-        <Header style={{top: '0'}} onLogoClick={() => this.onLogoClick()}/>
+        <Header style={{top: '0'}} 
+        onLogoClick={() => this.onLogoClick()}
+        page={this.state.page}
+        handleBack={() => this.handleBack()}
+        />
         {this.state.page === 'voter' ?
           <VoterMain style={{top: '80'}} navigate={() => this.historyToggle()}/>
             :

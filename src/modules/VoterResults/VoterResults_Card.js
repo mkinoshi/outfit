@@ -29,6 +29,7 @@ class VoterResultsCard extends React.Component {
     return (
       
         <View style={styles.card}>
+          <Text>Closed poll</Text>
           <Swiper showsPagination={true} loop={false} style={styles.card}
           >
             <GestureRecognizer
@@ -40,6 +41,9 @@ class VoterResultsCard extends React.Component {
                 <Image source={{uri: 'http://worldinsidepictures.com/wp-content/uploads/2013/11/1926.jpg'}}
                   style={{width: width-44, height: height-230}}
                 />
+                <Text style={{backgroundColor: 'red'}}>
+                  79% of voters chose this option
+                </Text>
               </View>
             </GestureRecognizer>
             <GestureRecognizer
@@ -51,6 +55,9 @@ class VoterResultsCard extends React.Component {
                 <Image source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/be/63/73/be6373a5a4d89a43ac74664ec470fc4b--christmas-party-outfit-winter-party-outfit.jpg'}}
                   style={{width: width-44, height: height-230}}
                 />
+                <Text style={{backgroundColor: 'red'}}>
+                  79% of voters chose this option
+                </Text>
               </View>
             </GestureRecognizer>
           </Swiper>
@@ -62,7 +69,8 @@ class VoterResultsCard extends React.Component {
 const styles={
 	card: {
 		height: height-120,
-    display: 'flex'
+    display: 'flex',
+    backgroundColor: 'rgba(82, 255, 87, 0.42)'
 	},
   swiper: {
     flex: 1
