@@ -28,7 +28,7 @@ class Main extends React.Component {
 
   render() {
     return (
-       <Container style={{top: 0, flex: 1}}>
+       <Container style={{top: 0}}>
         <Header style={{backgroundColor: 'white'}}>
           <Left>
             <Button transparent>
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   openModal: () => {
-    dispatch({type: 'OPEN_MODAL'});
+    dispatch({type: 'OPEN_FIRST_MODAL'});
   }
 });
 

@@ -6,9 +6,11 @@ const modalReducer = (state = {
     case 'OPEN_FIRST_MODAL':
       return {
         ...state,
-        isFirstOpen: false
+        isFirstOpen: true
       }
     default:
       return state;
   }
 }
+
+export default modalReducer;
