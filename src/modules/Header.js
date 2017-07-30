@@ -42,9 +42,13 @@ class Main extends React.Component {
        <Container style={{top: 0, zIndex: 5}}>
         <Header style={{backgroundColor: 'white'}} >
           <Left>
+            {backArrow ?
             <Button transparent onPress={() => this.props.handleBack()}>
-              {backArrow ? <Icon name='arrow-back' /> : <Icon name='ios-log-out' style={{fontSize: 24}}/> }
-            </Button>
+              <Icon name='arrow-back' /> 
+            </Button> :
+             <Button transparent onPress={() => this.handleLogout()}>
+              <Icon name='ios-log-out' style={{fontSize: 24}} />
+            </Button> }
           </Left>
           <Body>
             <Button style={{backgroundColor: 'white'}} onPress={() => this.props.onLogoClick()}>
