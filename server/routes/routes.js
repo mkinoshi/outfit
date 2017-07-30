@@ -122,17 +122,6 @@ router.post('/vote', function(req, res, next) {
 
 })
 
-router.get('/uploadCard', function(req, res, next) {
-  var newCard = new Card({
-    // enter cool card information right here
-    // card contains two different pictures
-  });
-})
-
-router.post('/voteCard', function(req, res, next) {
-
-});
-
 ///////////////////////////// END OF PUBLIC ROUTES /////////////////////////////
 
 router.use(function(req, res, next){
