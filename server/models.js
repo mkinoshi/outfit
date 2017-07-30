@@ -9,11 +9,11 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     facebookId: String,
     name: String,
-    age: Number,
-    location: String,
-    gender: String,
+    // age: Number,
+    // location: String,
+    // gender: String,
     myCards: [
-        card: {
+        {
             ref: 'Card',
             type: Schema.Types.ObjectId
         }
