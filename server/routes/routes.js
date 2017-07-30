@@ -89,7 +89,7 @@ router.post('/vote', function(req, res, next) {
   var cardId = req.body.cardId;
   var userId = req.body.userId;
   var vote = req.body.vote;
-
+  
   User.findById(userId, function(err, user) {
     if(err) {
       console.log('there was an error', err);
@@ -123,9 +123,118 @@ router.post('/vote', function(req, res, next) {
     user.save();
     res.json({success: true})
   })
-
 })
 
+router.post('/uploadcard', function(req, res, next) {
+  console.log("this is req.body in post/uploadcard", req.body)
+  var newCard = new Card({
+    author: req.body.userId,
+    dateCreated: Date.now(),
+    finalDecision: 0, // what the poster decided, 0 is undecided 1 is first choice, 2 is second choice
+    imageA: req.body.imageA,
+    imageB: req.body.imageB,
+    votesA: [], // userIds
+    votesB: [],  // userIDs
+    views: [],
+  });
+  newCard.save(function(err){
+    if(err){
+      res.json({success: false});
+    } else {
+      res.json({success: true, card: newCard});
+    }
+  })
+})
+
+router.get('/getcard/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log("this is req.params.match.id", id);
+  Card.findOne({_id: id}, function(err, card){
+    if(err){
+      console.log("error getting card:", err);
+      res.json({success: false});
+    } else {
+      res.json({card: card})
+    }
+  })
+})
+
+
+router.post('/postclosecard', function(req, res, next) {
+  var id = req.body.cardId;
+  var num = req.body.finalDecision;
+  console.log("id", id);
+  console.log("num", num);
+  console.log("req.body", req.body);
+  // res.json({req: req.body});
+  Card.findOne({_id: id}, function(err, card){
+    if(err){
+      res.json({success: false});
+    } else {
+      console.log("card", card);
+      if(card.finalDecision){
+        console.log("final decision already made!");
+        res.json({success: true});
+      } else {
+        card.finalDecision = num;
+        card.save(function(err){
+          if(err){
+            console.log("error saving final decision");
+            res.json({success: false});
+          } else {
+            console.log("this is updated card:", card);
+            res.json({success: true})
+          }
+        })
+      }
+    }
+  })
+})
+
+router.get('/getmycards/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log("params", req.params);
+  console.log("id", id);
+  User.findById(id, function(err, user){
+    if(err){
+      console.log("error:", err);
+    } else {
+      console.log("user", user);
+      arrayPromises = user.myCards.map((cardId) => {
+        return Card.findById(cardId)
+      })
+      Promise.all(arrayPromises).then((results) => {
+        console.log("this is arrayPromises results", results);
+        res.json({cards: results});
+      })
+    }
+  })
+  .catch((err) => console.log(err))
+})
+
+
+  // .then((user) => {
+  //   console.log("user", user);
+  //   arrayPromises = user.myCards.map((cardId) => {
+  //     return Card.findById(cardId)
+  //   })
+  //   Promise.all(arrayPromises).then((results) => {
+  //     console.log("this is arrayPromises results", results);
+  //     res.json({cards: cards})
+    // })
+  // })
+
+  // User.findOne({_id: id}, function(err, user){
+  //   if(err){
+  //     console.log("error getting user.mycards:", err);
+  //     res.json({success: false});
+  //   } else {
+  //     var returnArray = [];
+  //     for(var i = 0; i < user.myCards; i++){
+  //       if()
+  //     }
+  //   }
+  // })
 ///////////////////////////// END OF PUBLIC ROUTES /////////////////////////////
 
 router.use(function(req, res, next){
