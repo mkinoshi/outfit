@@ -1,3 +1,5 @@
+import {AsyncStorage} from 'react-native';
+
 export const LoginThunk = (dispatch) => {
   Expo.Facebook.logInWithReadPermissionsAsync('788110874701317', {
         permissions: ['public_profile']
@@ -12,8 +14,9 @@ export const LoginThunk = (dispatch) => {
   .then((response) => response.json())
   .then((resp) => {
     console.log(resp);
-    console.log(resp.name);
-    dispatch({type: 'GET_USER_DATA_DONE'})
+    console.log(resp.id);
+    AsyncStorage.setItem('user', JSON.stringify(resp.id));
+    dispatch({type: 'GET_USER_DATA_DONE', userId: resp.id})
   })
   .catch((err) => {
     dispatch({type: 'GET_USER_DATA_ERROR'});

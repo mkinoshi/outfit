@@ -1,16 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux';
 import {LoginThunk} from '../thunks/LoginThunk';
+import Main from './Main.js';
 
 class InitView extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    //console.log(state);
-    this.props.onLogin();
+  componentWillMount() {
+    AsyncStorage.getItem('user')
+    .then((user) => {
+      console.log("yoyoyoyoyoyoy")
+      console.log(user);
+      if (user) {
+        // this.props.onLogin(data); // access to database ?
+        this.props.setLogin(user);
+        // this.props.getOrCreate(user, null, null);
+      } else {
+        this.props.openLogin();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -18,8 +32,12 @@ class InitView extends React.Component {
     return(
       <View>
         {this.props.isLoggedIn ? 
-        <Text>You are logged In</Text> :
-        <Text>Initial page</Text>
+        <Main />:
+        <Button
+          onPress={() => this.props.onLogin()}
+          title="Continue with fb"
+          color="#4267B2"
+        />
         }
       </View>
     )
@@ -31,7 +49,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLogin: () => LoginThunk(dispatch)
+  setLogin: (userId) => dispatch({type: 'GET_USER_DATA_DONE', userId: userId}),
+  onLogin: () => LoginThunk(dispatch),
+  openLogin: () => dispatch({type: 'OPEN_LOGIN'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InitView);
