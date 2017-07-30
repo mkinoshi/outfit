@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require('../models.js');
 var _ = require('underscore');
 var Card = models.Card;
-var User = models.Card;
+var User = models.User;
 //////////////////////////////// PUBLIC ROUTES ////////////////////////////////
 // Users who are not logged in can see these routes
 
@@ -33,7 +33,7 @@ router.post('/getUser', function(req, res, next) {
         }
 
       })
-      res.json(user);
+      res.json(newUser);
     }
      else {
       res.json(user);
@@ -50,6 +50,8 @@ router.post('/getTenCards', function(req, res, next) {
     return cards
   });
   User.find({_id: userId}, function(err, user) {
+    // did not error catch here
+
     // should happen on newly registered user
     if(user.myCards.length === 0 && user.history.length === 0) {
       // shuffles cards and sends to front end
@@ -79,6 +81,7 @@ router.post('/getTenCards', function(req, res, next) {
 router.post('/vote', function(req, res, next) {
   var cardId = req.body.cardId;
   var userId = req.body.userId;
+
 })
 
 router.get('/uploadCard', function(req, res, next) {
