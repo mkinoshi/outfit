@@ -6,6 +6,7 @@ import Header from './Header.js';
 const {height, width} = Dimensions.get('window');
 import VoterMain from './Voter/Voter_index';
 import NewModal from './Modal.js';
+import {getCardThunk} from '../thunks/getCardThunk';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -14,15 +15,15 @@ class Main extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('next props is here');
-    console.log(nextProps);
     if (nextProps.facebookId) {
       nextProps.getOrCreate(nextProps.facebookId, nextProps.name)
+    } 
+    if (nextProps.id) {
+      nextProps.getCard(nextProps.id);
     }
   }
 
   render() {
-    console.log(this.props);
     return (
       <View >
         <Header style={{top: '0'}}/>
@@ -44,11 +45,13 @@ const styles = {
 const mapStateToProps = (state) => ({
   facebookId: state.userReducer.facebookId,
   name: state.userReducer.name,
-  isOpen: state.modalReducer.isModalOpen
+  isOpen: state.modalReducer.isModalOpen,
+  id: state.userReducer.user._id
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOrCreate: (userId, name) => getUserThunk(userId, name)(dispatch),
+  getCard: (id) => getCardThunk(id)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

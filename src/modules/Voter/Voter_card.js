@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions, Image } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Swiper from 'react-native-swiper';
+import { connect } from 'react-redux';
+import DoubleClick from 'react-native-double-click';
 const {height, width} = Dimensions.get('window');
 
 class Card extends React.Component {
@@ -21,44 +23,65 @@ class Card extends React.Component {
     // }
   }
 
-  onSwipeUp() {
-    this.setState({test: 'otto'});
+  onSwipeUp(cardId) {
+    this.props.incrementCard(cardId);
+  }
+
+  handleDoubleClick(cardId, voteId) {
+    console.log('voted!!');
+    this.props.voteCard(cardId, voteId)
   }
 
   render() {
-  	console.log('got to voter card');
     return (
       
         <View style={styles.card}>
-          <Swiper showsPagination={true} loop={false} style={styles.card}
-          >
-            <GestureRecognizer
-              onSwipeUp={() => this.onSwipeUp()}
-              style={styles.innerCard}
-            >
-              <View>
-                <Text>{this.state.test}</Text>
-                <Image source={{uri: 'http://worldinsidepictures.com/wp-content/uploads/2013/11/1926.jpg'}}
-                  style={{width: width-44, height: height-230}}
-                />
-              </View>
-            </GestureRecognizer>
-            <GestureRecognizer
-              onSwipeUp={() => this.onSwipeUp()}
-              style={styles.innerCard}
-            >
-              <View>
-                <Text>{this.state.test}</Text>
-                <Image source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/be/63/73/be6373a5a4d89a43ac74664ec470fc4b--christmas-party-outfit-winter-party-outfit.jpg'}}
-                  style={{width: width-44, height: height-230}}
-                />
-              </View>
-            </GestureRecognizer>
-          </Swiper>
+           {this.props.cards.length > 0 ? 
+            (
+            <Swiper showsPagination={true} loop={false} style={styles.card}
+            > 
+              <GestureRecognizer
+                onSwipeUp={() => this.onSwipeUp(this.props.cards[this.props.currentCard]._id)}
+                style={styles.innerCard}
+              >
+                <DoubleClick onClick={() => this.handleDoubleClick(this.props.cards[this.props.currentCard]._id, 1)}>
+                  <View>
+                    <Text>{this.state.test}</Text>
+                    <Image source={{uri: this.props.cards[this.props.currentCard].imageA}}
+                      style={{width: width-44, height: height-230}}
+                    />
+                  </View>
+                </DoubleClick>
+              </GestureRecognizer>
+              <GestureRecognizer
+                onSwipeUp={() => this.onSwipeUp(this.props.cards[this.props.currentCard]._id)}
+                style={styles.innerCard}
+              >
+                <DoubleClick onClick={() => this.handleDoubleClick(this.props.cards[this.props.currentCard]._id, 2)}>
+                  <View>
+                    <Text>{this.state.test}</Text>
+                    <Image source={{uri: this.props.cards[this.props.currentCard].imageB}}
+                      style={{width: width-44, height: height-230}}
+                    />
+                  </View>
+                </DoubleClick>
+              </GestureRecognizer>
+          </Swiper> ) :
+            null}
         </View>
     )
   }
 }
+
+// const mapStateToProps = (state) => ({
+//   cards: state.cardReducer.cards,
+//   currentCard: state.cardReducer.currentCard
+// });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   incrementCard: () => dispatch({type: 'INCREMENT_CARD'})
+// });
+
 
 const styles={
 	card: {

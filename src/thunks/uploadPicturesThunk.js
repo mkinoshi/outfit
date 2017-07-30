@@ -23,7 +23,6 @@ export const uploadPicturesThunk = (first, second, id) => (dispatch) => {
     awsURL: "https://console.aws.amazon.com/s3/buckets/horizons-hackathon-snackchat/?region=us-east-1&tab=overview",
     successActionStatus: 201
   }
-   console.log(process.env.AWS_ACCESS_KEY);
   RNS3.put(file2, options2).then((response) => {
     if (response.status !== 201) {
         throw new Error("Failed to upload image to S3");

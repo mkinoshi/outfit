@@ -18,6 +18,11 @@ const userReducer = (state = {
         ...state,
         isLoggedIn: false
       }
+    case 'LOG_OUT':
+      return {
+        ...state,
+        isLoggedIn: false
+      }
     case 'GET_USER_DATA_ERROR':
       return state;
     case 'LOAD_USER_DONE':
@@ -27,6 +32,14 @@ const userReducer = (state = {
       }
     case 'LOAD_USER_ERROR':
       return state;
+    case 'UPDATE_HISTORY':   
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          history: state.user.history.concat([action.card])
+        }
+      }
     default:
       return state;
   }

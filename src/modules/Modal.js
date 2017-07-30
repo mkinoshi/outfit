@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   Dimensions,
   TouchableOpacity,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 const {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -39,14 +40,15 @@ class NewModal extends React.Component {
     if (this.state.firstPicture) {
       this.setState({view: 1})
     } else {
-      AlertIOS.alert('Choose a picture !');
+      Alert.alert('Choose a picture !');
     }
   }
 
   handleDoneClick() {
-    console.log(this.props.id);
+    if (this.state.firstPicture && this.state.secondPicture) {
+      this.props.uploadPictures(this.state.firstPicture, this.state.secondPicture, this.props.id);
+    }
     this.props.closeModal();
-    this.props.uploadPictures(this.state.firstPicture, this.state.secondPicture, this.props.id);
   }
 
   handleCamera() {
@@ -194,13 +196,13 @@ const color_enum = ['#0693e3', '#8ed1fc', '#00D084', '#F78DA7', '#EB144C'];
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: 30,
+    borderRadius: 10,
     borderColor: '#cccccc',
     height: height-200,
     width: width-40,
     position: 'absolute',
     backgroundColor: '#F8F9FA',
-    top: 90,
+    top: 110,
     left: 20
   },
   slider: {

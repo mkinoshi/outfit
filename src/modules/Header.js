@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
-import {Image} from 'react-native';
+import {Image, AsyncStorage} from 'react-native';
 import { ImagePicker } from 'expo';
 import { connect } from 'react-redux';
 
@@ -27,13 +27,18 @@ class Main extends React.Component {
     // takeImage()
   }
 
+  handleLogout() {
+    AsyncStorage.removeItem('user')
+    this.props.onLogout();
+  } 
+
   render() {
     return (
        <Container style={{top: 0, zIndex: 5}}>
         <Header style={{backgroundColor: 'white'}}>
           <Left>
-            <Button transparent>
-              {/* <Icon name='arrow-back' /> */}
+            <Button transparent onPress={() => this.handleLogout()}>
+               <Icon name='ios-log-out' style={{fontSize: 24}}/> 
             </Button>
           </Left>
           <Body>
@@ -43,7 +48,7 @@ class Main extends React.Component {
           </Body>
           <Right>
             <Button transparent onPress={() => this.handleModal()}>
-              <Icon name='camera' />
+              <Icon name='ios-shirt-outline' style={{fontSize: 24}} />
             </Button>
           </Right>
         </Header>
@@ -58,7 +63,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   openModal: () => {
     dispatch({type: 'OPEN_FIRST_MODAL'});
-  }
+  },
+  onLogout: () => dispatch({type: 'LOG_OUT'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
