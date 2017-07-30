@@ -15,14 +15,14 @@ class PosterResultsMain extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log('what the fuck', this.props.cardId)
-    axios('https://vast-beach-20437.herokuapp.com/' + this.props.cardId)
-    .then((response) => {
-      this.setState({card: response.data.card})
-      console.log(response);
-    })
-  }
+  // componentDidMount() {
+  //   console.log('what the fuck', this.props.cardId)
+  //   axios('https://vast-beach-20437.herokuapp.com/' + this.props.cardId)
+  //   .then((response) => {
+  //     this.setState({card: response.data.card})
+  //     console.log(response);
+  //   })
+  // }
 
   render() {
     return (

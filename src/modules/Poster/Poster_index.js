@@ -26,6 +26,7 @@ class PosterMain extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <View style={styles.container}>
         {this.state.cards.map((card) => (
