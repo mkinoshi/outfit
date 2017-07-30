@@ -97,14 +97,14 @@ router.post('/uploadcard', function(req, res, next) {
     if(err){
       res.json({success: false});
     } else {
-      res.json({success: true});
+      res.json({success: true, card: newCard});
     }
   })
 })
 
-router.get('/getcard', function(req, res, next){
-  var id = req.params.match.id;
-  console.log("this is req.params.match.id");
+router.get('/getcard/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log("this is req.params.match.id", id);
   Card.findOne({_id: id}, function(err, card){
     if(err){
       console.log("error getting card:", err);
