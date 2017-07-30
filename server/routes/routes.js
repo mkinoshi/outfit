@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require('../models.js');
 var _ = require('underscore');
 var Card = models.Card;
-var User = models.Card;
+var User = models.User;
 //////////////////////////////// PUBLIC ROUTES ////////////////////////////////
 // Users who are not logged in can see these routes
 
@@ -115,10 +115,84 @@ router.get('/getcard/:id', function(req, res, next){
   })
 })
 
-router.post('/voteCard', function(req, res, next) {
-
+router.post('/votecard', function(req, res, next) {
 });
 
+router.post('/postclosecard', function(req, res, next) {
+  var id = req.body.cardId;
+  var num = req.body.finalDecision;
+  console.log("id", id);
+  console.log("num", num);
+  console.log("req.body", req.body);
+  // res.json({req: req.body});
+  Card.findOne({_id: id}, function(err, card){
+    if(err){
+      res.json({success: false});
+    } else {
+      console.log("card", card);
+      if(card.finalDecision){
+        console.log("final decision already made!");
+        res.json({success: true});
+      } else {
+        card.finalDecision = num;
+        card.save(function(err){
+          if(err){
+            console.log("error saving final decision");
+            res.json({success: false});
+          } else {
+            console.log("this is updated card:", card);
+            res.json({success: true})
+          }
+        })
+      }
+    }
+  })
+})
+
+router.get('/getmycards/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log("params", req.params);
+  console.log("id", id);
+  User.findById(id, function(err, user){
+    if(err){
+      console.log("error:", err);
+    } else {
+      console.log("user", user);
+      arrayPromises = user.myCards.map((cardId) => {
+        return Card.findById(cardId)
+      })
+      Promise.all(arrayPromises).then((results) => {
+        console.log("this is arrayPromises results", results);
+        res.json({cards: results});
+      })
+    }
+  })
+  .catch((err) => console.log(err))
+})
+
+
+  // .then((user) => {
+  //   console.log("user", user);
+  //   arrayPromises = user.myCards.map((cardId) => {
+  //     return Card.findById(cardId)
+  //   })
+  //   Promise.all(arrayPromises).then((results) => {
+  //     console.log("this is arrayPromises results", results);
+  //     res.json({cards: cards})
+    // })
+  // })
+
+  // User.findOne({_id: id}, function(err, user){
+  //   if(err){
+  //     console.log("error getting user.mycards:", err);
+  //     res.json({success: false});
+  //   } else {
+  //     var returnArray = [];
+  //     for(var i = 0; i < user.myCards; i++){
+  //       if()
+  //     }
+  //   }
+  // })
 ///////////////////////////// END OF PUBLIC ROUTES /////////////////////////////
 
 router.use(function(req, res, next){
