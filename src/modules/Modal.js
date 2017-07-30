@@ -7,14 +7,16 @@ import {
   Modal,
   TouchableHighlight,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 const {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button, FormLabel, FormInput} from 'react-native-elements';
+import {FormLabel, FormInput} from 'react-native-elements';
 import {Button} from 'native-base';
 import _ from 'underscore';
 import { connect } from 'react-redux';
+import { ImagePicker } from 'expo';
 
 class NewModal extends React.Component {
   constructor(props) {
@@ -23,7 +25,9 @@ class NewModal extends React.Component {
       color: "#c5c7c8",
       view: 0,
       content: null,
-      rate: null
+      rate: null,
+      firstPicture: "",
+      secondPicture: "",
     }
   }
 
@@ -40,6 +44,44 @@ class NewModal extends React.Component {
     this.props.closeModal(this.props.id, this.state.rate, this.state.content);
   }
 
+  handleCamera() {
+    takeImage = async () => {
+      let result = await ImagePicker.launchCameraAsync({
+        quality: 0.75,
+        base64: true,
+        exif: true,
+      });
+      console.log("TAKE IMAGE", result.uri);
+
+      if (!result.cancelled) {
+        // AsyncStorage.setItem('image', result.uri).then(() => {
+        //   this.props.navigation.navigate('VisionTest');
+        // });
+        this.setState({firstPicture: result.uri});
+      }
+    };
+    takeImage()
+  }
+
+  handleFolder() {
+    choosePicture = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        quality: 0.75,
+        base64: true,
+        exif: true,
+      });
+      console.log("TAKE IMAGE", result.uri);
+
+      if (!result.cancelled) {
+        // AsyncStorage.setItem('image', result.uri).then(() => {
+        //   this.props.navigation.navigate('VisionTest');
+        // });
+        this.setState({secondPicture: result.uri});
+      }
+    };
+    choosePicture()
+  }
+
   render() {
     return (
       <TouchableOpacity style={styles.outer} onPress={() => this.handleDoneClick()}>
@@ -47,32 +89,42 @@ class NewModal extends React.Component {
            {this.state.view === 0 ?
              (
                <View>
-                  <Text style={{width: 225, marginLeft: 45, paddingTop: 50, fontFamily: 'Arial', fontSize: 15}}>Take or choose the first picture</Text>
-                  <Button
-                   title='NEXT'
-                   small
-                   backgroundColor='#35cc75'
-                   onPress={() => this.handleNextClick()}
-                   style={{top: 300, width: 120, height: 25, marginLeft: 75}}
-                  />
-                  <TouchableOpacity  onPress={() => this.handleNextClick()}>
-                    <Text style={{top: 336, fontSize: 12, color: '#c5c7c8', marginLeft: 110}}>Skip This Step</Text>
-                  </TouchableOpacity>
+                  <View style={{borderColor: 'black', width: 240, height: 320, marginLeft: 'auto', marginRight: 'auto', marginTop: 30}} >
+                    {this.state.firstPicture ? <Image source={{uri: this.state.firstPicture}} style={{width: 240, height: 320}}/> : 
+                    <Text>Take or choose the first picture</Text>}
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'center'}}>
+                    <Button onPress={() => this.handleCamera()}>
+                      <Icon name='ios-camera'/>
+                    </Button>
+                    <Button onPress={() => this.handleFolder()}>
+                      <Icon name='ios-folder' />
+                    </Button>
+                  </View>
+                  <Button success onPress={() => this.handleNextClick()} 
+                    style={{marginTop: 60, width: 120, height: 40, marginLeft: 'auto', marginRight: 'auto'}}>
+                    <Text style={{marginLeft: 'auto', marginRight: 'auto'}}> Next </Text>
+                  </Button>
                 </View>
             ) : (
               <View>
-                <Text style={{width: 225, marginLeft: 45, paddingTop: 50, fontFamily: 'Arial', fontSize: 20}}>Take or choose the first picture</Text>
-                  <Button
-                  title='DONE'
-                  small
-                  backgroundColor='#35cc75'
-                  onPress={() => this.handleDoneClick()}
-                  style={{top: 300, width: 120, height: 25, marginLeft: 75}}
-                  />
-                  <TouchableOpacity onPress={() => this.handleDoneClick()}>
-                  <Text style={{top: 336, fontSize: 12, color: '#c5c7c8', marginLeft: 110}}>Skip This Step</Text>
-                  </TouchableOpacity>
-              </View>
+                  <View style={{borderColor: 'black', width: 240, height: 320, marginLeft: 'auto', marginRight: 'auto', marginTop: 30}} >
+                    {this.state.secondPicture ? <Image source={{uri: this.state.secondPicture}} style={{width: 240, height: 320}}/> : 
+                    <Text>Take or choose the second picture</Text>}
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'center'}}>
+                    <Button onPress={() => this.handleCamera()}>
+                      <Icon name='ios-camera'/>
+                    </Button>
+                    <Button onPress={() => this.handleFolder()}>
+                      <Icon name='ios-folder' />
+                    </Button>
+                  </View>
+                  <Button success onPress={() => this.handleDoneClick()} 
+                    style={{marginTop: 60, width: 120, height: 40, marginLeft: 'auto', marginRight: 'auto'}}>
+                    <Text style={{marginLeft: 'auto', marginRight: 'auto'}}> Done </Text>
+                  </Button>
+                </View>
             )}
       </View>
     </TouchableOpacity>
@@ -89,6 +141,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // closeModal: (id, rate, content) => dispatch(closeModal(id, rate, content)),
+    // goToNext: () => dispatch({type:'NEXT_MODAL'})
   }
 }
 
@@ -102,11 +155,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: '#cccccc',
     height: height-200,
-    width: 300,
+    width: width-40,
     position: 'absolute',
     backgroundColor: '#F8F9FA',
-    top: 150,
-    left: 40
+    top: 90,
+    left: 20
   },
   slider: {
     marginTop: 30,
@@ -117,7 +170,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height:height,
     width: width,
-    backgroundColor: 'rgba(52, 52, 52, 0.6)'
+    backgroundColor: 'rgba(52, 52, 52, 0.8)'
   },
   track: {
     height: 10,

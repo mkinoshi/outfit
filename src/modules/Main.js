@@ -42,7 +42,7 @@ const styles = {
 const mapStateToProps = (state) => ({
   facebookId: state.userReducer.facebookId,
   name: state.userReducer.name,
-  isOpen: state.modalReducer.isFirstOpen
+  isOpen: state.modalReducer.isModalOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
