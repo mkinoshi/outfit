@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, Modal, TouchableHighlight, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, Modal, TouchableHighlight, Dimensions, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Constants } from 'expo';
 import { StackNavigator } from 'react-navigation';
 // import Main from '../Main';
@@ -47,7 +47,8 @@ class StylePoints extends React.Component {
               <Text style={{textAlign: 'right'}}>X</Text>
             </TouchableHighlight>
 
-            <TouchableOpacity style={styles.container}
+            <ScrollView>
+              <TouchableOpacity style={styles.container}
               onPress={() => this.props.navigate()}
             >
               <View style={styles.card}> 
@@ -84,6 +85,7 @@ class StylePoints extends React.Component {
                     <Text style={styles.text}>27%</Text>
                   </View>
               </View>
+            </ScrollView>  
           </View>
          </View>
         </Modal>
