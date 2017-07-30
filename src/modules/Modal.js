@@ -37,12 +37,17 @@ class NewModal extends React.Component {
   }
 
   handleNextClick() {
-    this.setState({view: 1})
+    if (this.state.firstPicture) {
+      this.setState({view: 1})
+    } else {
+      AlertIOS.alert('Choose a picture !');
+    }
   }
 
   handleDoneClick() {
+    console.log(this.props.id);
     this.props.closeModal();
-    this.props.uploadPictures();
+    this.props.uploadPictures(this.state.firstPicture, this.state.secondPicture, this.props.id);
   }
 
   handleCamera() {
@@ -64,7 +69,45 @@ class NewModal extends React.Component {
     takeImage()
   }
 
+  handleCamera2() {
+    takeImage = async () => {
+      let result = await ImagePicker.launchCameraAsync({
+        quality: 0.75,
+        base64: true,
+        exif: true,
+      });
+      console.log("TAKE IMAGE", result.uri);
+
+      if (!result.cancelled) {
+        // AsyncStorage.setItem('image', result.uri).then(() => {
+        //   this.props.navigation.navigate('VisionTest');
+        // });
+        this.setState({secondPicture: result.uri});
+      }
+    };
+    takeImage()
+  }
+
   handleFolder() {
+    choosePicture = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        quality: 0.75,
+        base64: true,
+        exif: true,
+      });
+      console.log("TAKE IMAGE", result.uri);
+
+      if (!result.cancelled) {
+        // AsyncStorage.setItem('image', result.uri).then(() => {
+        //   this.props.navigation.navigate('VisionTest');
+        // });
+        this.setState({firstPicture: result.uri});
+      }
+    };
+    choosePicture()
+  }
+
+  handleFolder2() {
     choosePicture = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         quality: 0.75,
@@ -94,18 +137,17 @@ class NewModal extends React.Component {
                     {this.state.firstPicture ? <Image source={{uri: this.state.firstPicture}} style={{width: 240, height: 320}}/> : 
                     <Text>Take or choose the first picture</Text>}
                   </View>
-                  <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'center'}}>
+                  <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'space-around'}}>
                     <Button onPress={() => this.handleCamera()}>
-                      <Icon name='ios-camera'/>
+                      <Icon name='ios-camera'style={{fontSize: 20}}/>
                     </Button>
                     <Button onPress={() => this.handleFolder()}>
-                      <Icon name='ios-folder' />
+                      <Icon name='ios-folder' style={{fontSize: 20}}/>
                     </Button>
-                  </View>
-                  <Button success onPress={() => this.handleNextClick()} 
-                    style={{marginTop: 60, width: 120, height: 40, marginLeft: 'auto', marginRight: 'auto'}}>
-                    <Text style={{marginLeft: 'auto', marginRight: 'auto'}}> Next </Text>
+                    <Button success onPress={() => this.handleNextClick()}>
+                      <Icon name='ios-navigate' style={{fontSize: 20}}/>
                   </Button>
+                  </View>
                 </View>
             ) : (
               <View>
@@ -113,18 +155,17 @@ class NewModal extends React.Component {
                     {this.state.secondPicture ? <Image source={{uri: this.state.secondPicture}} style={{width: 240, height: 320}}/> : 
                     <Text>Take or choose the second picture</Text>}
                   </View>
-                  <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'center'}}>
-                    <Button onPress={() => this.handleCamera()}>
-                      <Icon name='ios-camera'/>
+                  <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'space-around'}}>
+                    <Button onPress={() => this.handleCamera2()}>
+                      <Icon name='ios-camera'style={{fontSize: 20}}/>
                     </Button>
-                    <Button onPress={() => this.handleFolder()}>
-                      <Icon name='ios-folder' />
+                    <Button onPress={() => this.handleFolder2()}>
+                      <Icon name='ios-folder' style={{fontSize: 20}}/>
+                    </Button>
+                    <Button success onPress={() => this.handleDoneClick()}>
+                      <Icon name='ios-done-all' style={{fontSize: 20}}/>
                     </Button>
                   </View>
-                  <Button success onPress={() => this.handleDoneClick()} 
-                    style={{marginTop: 60, width: 120, height: 40, marginLeft: 'auto', marginRight: 'auto'}}>
-                    <Text style={{marginLeft: 'auto', marginRight: 'auto'}}> Done </Text>
-                  </Button>
                 </View>
             )}
       </View>
@@ -135,14 +176,14 @@ class NewModal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    // id: state.modal_reducers.articleId
+    id: state.userReducer.user._id
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch({type: 'CLOSE_MODAL'}),
-    uploadPictures: (first, second) => uploadPicturesThunk(first, second)(dispatch)
+    uploadPictures: (first, second, id) => uploadPicturesThunk(first, second, id)(dispatch)
     // goToNext: () => dispatch({type:'NEXT_MODAL'})
   }
 }

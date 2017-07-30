@@ -1,4 +1,5 @@
-const dbURL = 'http://localhost:3000';
+// const dbURL = 'http://localhost:3000';
+const dbURL = 'https://vast-beach-20437.herokuapp.com';
 import axios from 'axios';
 
 export const getUserThunk = (userId, name) => (dispatch) => {
@@ -10,7 +11,7 @@ export const getUserThunk = (userId, name) => (dispatch) => {
           name: name
        })
        .then((response) => {
-          console.log(response);
+          console.log("this is response");
           console.log(response.data);
           dispatch({type: 'LOAD_USER_DONE', data: response.data})
        })

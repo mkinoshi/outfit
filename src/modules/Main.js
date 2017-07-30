@@ -14,6 +14,8 @@ class Main extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('next props is here');
+    console.log(nextProps);
     if (nextProps.facebookId) {
       nextProps.getOrCreate(nextProps.facebookId, nextProps.name)
     }
