@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet,  Image } from 'react-native';
+import { Text, View, StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 
 class PosterMain extends Component {
@@ -11,7 +11,9 @@ class PosterMain extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.card}> 
+        <TouchableOpacity style={styles.card}
+          onPress={() => this.props.navigate()}
+        >
          <View style={styles.outfit}>
           <Image
           style={styles.image}
@@ -26,7 +28,7 @@ class PosterMain extends Component {
           />
           <Text style={styles.text}>55%</Text>
         </View>  
-        </View>
+        </TouchableOpacity>
         <View style={styles.card}> 
             <View style={styles.outfit}>
               <Image

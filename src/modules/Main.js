@@ -57,6 +57,14 @@ class Main extends React.Component {
     }
   }
 
+  myCardsToggle() {
+    if (this.state.page === 'posterResults') {
+      this.setState({page: 'poster'});
+    } else {
+      this.setState({page: 'posterResults'})
+    }
+  }
+
   render() {
     return (
       <View >
@@ -71,7 +79,7 @@ class Main extends React.Component {
           null
         }
         {this.state.page === 'poster' ?
-          <PosterMain />
+          <PosterMain navigate={() => this.myCardsToggle()}/>
             :
           null
         }
