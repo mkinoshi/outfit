@@ -90,7 +90,10 @@ router.post('/vote', function(req, res, next) {
   var userId = req.body.userId;
   var vote = req.body.vote;
 
-  User.findbyId(userId, function(err, user) {
+  User.findById(userId, function(err, user) {
+    if(err) {
+      console.log('there was an error', err);
+    }
     if(!user) {
       res.json({success: false})
     } else {
@@ -118,6 +121,7 @@ router.post('/vote', function(req, res, next) {
       })
     }
     user.save();
+    res.json({success: true})
   })
 
 })
