@@ -2,8 +2,12 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models.js');
 var _ = require('underscore');
+var Clarifai = require('clarifai');
 var Card = models.Card;
 var User = models.User;
+const clarifai = new Clarifai.App({
+     apiKey: 'cdf8edeaf670475681e20d51a228c9ec'
+});
 //////////////////////////////// PUBLIC ROUTES ////////////////////////////////
 // Users who are not logged in can see these routes
 
@@ -89,7 +93,7 @@ router.post('/vote', function(req, res, next) {
   var cardId = req.body.cardId;
   var userId = req.body.userId;
   var vote = req.body.vote;
-  
+
   User.findById(userId, function(err, user) {
     if(err) {
       console.log('there was an error', err);
@@ -127,6 +131,35 @@ router.post('/vote', function(req, res, next) {
 
 router.post('/uploadcard', function(req, res, next) {
   // console.log("this is req.body in post/uploadcard", req.body)
+  console.log(req.body.imageA);
+  // predict the contents of an image by passing in a url
+  clarifai.models.predict('e9576d86d2004ed1a38ba0cf39ecb4b1', req.body.imageA).then(
+    function(response) {
+      var sfwVal = response.outputs[0].data.concepts[0].value;
+      if(sfwVal < 0.7) {
+        res.json({success: false});
+        return next();
+      }
+    },
+    function(err) {
+      console.error(err);
+    }
+  );
+  clarifai.models.predict('e9576d86d2004ed1a38ba0cf39ecb4b1', req.body.imageB).then(
+    function(response) {
+      var sfwVal = response.outputs[0].data.concepts[0].value;
+      if(sfwVal < 0.7) {
+        res.json({success: false})
+        return next();
+      }
+    },
+    function(err) {
+      console.error(err);
+    }
+  );
+
+  console.log('does this execute');
+
   var newCard = new Card({
     author: req.body.userId,
     dateCreated: Date.now(),
@@ -142,6 +175,7 @@ router.post('/uploadcard', function(req, res, next) {
       res.json({success: false});
     } else {
       User.findOne({_id: req.body.userId}, function(err, user){
+        console.log('this is the new card', newCard);
         user.myCards.push(newCard._id);
         user.save(function(err, user){
           if(err){

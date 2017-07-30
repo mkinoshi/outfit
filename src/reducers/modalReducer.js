@@ -1,12 +1,16 @@
 const modalReducer = (state = {
-  isFirstOpen: false,
-  isSecondOpen: false
+  isModalOpen: false
 }, action) => {
   switch(action.type) {
     case 'OPEN_FIRST_MODAL':
       return {
         ...state,
-        isFirstOpen: true
+        isModalOpen: true
+      }
+    case 'CLOSE_MODAL':
+      return {
+        ...state,
+        isModalOpen: false
       }
     default:
       return state;
