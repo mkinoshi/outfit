@@ -3,19 +3,27 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions } from 'react-native';
 import PosterResultsCard from './PosterResults_Card';
 import PosterResultsBanner from './PosterResults_Banner';
+import axios from 'axios';
 
 const {height, width} = Dimensions.get('window');
 
 class PosterResultsMain extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      card: ''
+    }
+  }
+
   componentDidMount() {
-    //access to userId
-    //this.props.getOrCreate(this.props.facebookId, this.props.name)
+    console.log('what the fuck', this.props.cardId)
+    axios('https://vast-beach-20437.herokuapp.com/' + this.props.cardId)
+    .then((response) => {
+      this.setState({card: response.data.card})
+      console.log(response);
+    })
   }
-  componentWillReceiveProps(nextProps) {
-    // if (nextProps.facebookId) {
-    //   nextProps.getOrCreate(nextProps.facebookId, nextProps.name)
-    // }
-  }
+
   render() {
     return (
       <View style={styles.outer}>
@@ -35,9 +43,6 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  // imageA: state.cardRedu
-  // imageB:
-  // stylePoints:
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,51 +1,55 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Text, View, StyleSheet,  Image, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
+import axios from 'axios';
+const uuidv4 = require('uuid/v4');
 
 class PosterMain extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cards: []
+    }
+  }
   // static navigationOptions = {
   //   title: 'Poster',
   // };
 
+  componentDidMount() {
+    axios('https://vast-beach-20437.herokuapp.com/getmycards/' + this.props.id)
+    .then((response) => {
+      console.log('hi');
+      this.setState({cards: response.data.cards});
+      console.log(response.data.cards);
+    });
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.card}
-          onPress={() => this.props.navigate()}
-        >
-         <View style={styles.outfit}>
-          <Image
-          style={styles.image}
-          source={{url: 'http://images.askmen.com/fashion/style_icon/33_style-icon-brad-pitt.jpg'}}
-          />
-          <Text style={styles.text}>45%</Text>
+        {this.state.cards.map((card) => (
+          <TouchableOpacity style={styles.card}
+            onPress={() => {this.props.navigate(card._id)}}
+            key={uuidv4()}
+          >
+           <View style={styles.outfit}>
+            <Image
+            style={styles.image}
+            source={{uri: card.imageA}}
+            />
+            <Text style={styles.text}>45%</Text>
+          </View>
+          <View style={styles.outfit}>
+            <Image
+            style={styles.image}
+            source={{uri: card.imageB}}
+            />
+            <Text style={styles.text}>55%</Text>
+          </View>  
+          </TouchableOpacity>
+          ))}
         </View>
-        <View style={styles.outfit}>
-          <Image
-          style={styles.image}
-          source={{url: 'https://s-media-cache-ak0.pinimg.com/736x/37/f3/c8/37f3c8e9620f07a7383b7363248abf7b--brad-pitt--brad-pitt-news.jpg'}}
-          />
-          <Text style={styles.text}>55%</Text>
-        </View>  
-        </TouchableOpacity>
-        <View style={styles.card}> 
-            <View style={styles.outfit}>
-              <Image
-              style={styles.image}
-              source={{url: 'http://images.complex.com/complex/image/upload/c_limit,w_680/fl_lossy,pg_1,q_auto/arx5z1k5yvtauzsk6pna.jpg'}}
-              />
-              <Text style={styles.text}>73%</Text>
-            </View>
-            <View style={styles.outfit}>
-              <Image
-              style={styles.image}
-              source={{url: 'https://s-media-cache-ak0.pinimg.com/736x/f6/ec/44/f6ec44d56a98ea927d5d4ead5cfcf40a--espn-the-magazine-magazine-photos.jpg'}}
-              />
-              <Text style={styles.text}>27%</Text>
-            </View>
-        </View>
-      </View>
     );
   }
 }
@@ -91,4 +95,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PosterMain;
+
+const mapStateToProps = (state) => ({
+  cards: state.userReducer.user.myCards,
+  id: state.userReducer.user._id
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getOrCreate: (userId, name) => getUserThunk(userId, name)(dispatch),
+  getCard: (id) => getCardThunk(id)(dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PosterMain);
