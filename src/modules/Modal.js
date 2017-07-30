@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 const {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button, FormLabel, FormInput} from 'react-native-elements';
+import { FormLabel, FormInput} from 'react-native-elements';
 import {Button} from 'native-base';
 import _ from 'underscore';
 import { connect } from 'react-redux';
