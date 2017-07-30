@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions, Image } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Swiper from 'react-native-swiper';
 const {height, width} = Dimensions.get('window');
@@ -30,8 +30,7 @@ class Card extends React.Component {
     return (
       
         <View style={styles.card}>
-          <Swiper showsPagination={true}
-          
+          <Swiper showsPagination={true} loop={false} style={styles.card}
           >
             <GestureRecognizer
               onSwipeUp={() => this.onSwipeUp()}
@@ -39,6 +38,9 @@ class Card extends React.Component {
             >
               <View>
                 <Text>{this.state.test}</Text>
+                <Image source={{uri: 'http://worldinsidepictures.com/wp-content/uploads/2013/11/1926.jpg'}}
+                  style={{width: width-44, height: height-230}}
+                />
               </View>
             </GestureRecognizer>
             <GestureRecognizer
@@ -47,6 +49,9 @@ class Card extends React.Component {
             >
               <View>
                 <Text>{this.state.test}</Text>
+                <Image source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/be/63/73/be6373a5a4d89a43ac74664ec470fc4b--christmas-party-outfit-winter-party-outfit.jpg'}}
+                  style={{width: width-44, height: height-230}}
+                />
               </View>
             </GestureRecognizer>
           </Swiper>
@@ -57,17 +62,19 @@ class Card extends React.Component {
 
 const styles={
 	card: {
-		backgroundColor: 'blue',
 		height: height-120,
     display: 'flex'
 	},
+  swiper: {
+    flex: 1
+  },
 	innerCard: {
 		margin: 20,
 		marginTop: 50,
     marginBottom: 150,
 		flex: 1,
 		borderWidth: 2,
-		borderRadius: 5,
+		borderRadius: 10,
 		borderColor: 'black'
 	}
 }
