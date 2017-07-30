@@ -41,7 +41,7 @@ class NewModal extends React.Component {
 
   handleDoneClick() {
     this.props.closeModal();
-    this.props.uploadPictures();
+    this.props.uploadPictures(this.state.firstPicture, this.state.secondPicture, this.props.id);
   }
 
   handleCamera() {
@@ -90,7 +90,7 @@ class NewModal extends React.Component {
              (
                <View>
                   <View style={{borderColor: 'black', width: 240, height: 320, marginLeft: 'auto', marginRight: 'auto', marginTop: 30}} >
-                    {this.state.firstPicture ? <Image source={{uri: this.state.firstPicture}} style={{width: 240, height: 320}}/> : 
+                    {this.state.firstPicture ? <Image source={{uri: this.state.firstPicture}} style={{width: 240, height: 320}}/> :
                     <Text>Take or choose the first picture</Text>}
                   </View>
                   <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'center'}}>
@@ -101,7 +101,7 @@ class NewModal extends React.Component {
                       <Icon name='ios-folder' />
                     </Button>
                   </View>
-                  <Button success onPress={() => this.handleNextClick()} 
+                  <Button success onPress={() => this.handleNextClick()}
                     style={{marginTop: 60, width: 120, height: 40, marginLeft: 'auto', marginRight: 'auto'}}>
                     <Text style={{marginLeft: 'auto', marginRight: 'auto'}}> Next </Text>
                   </Button>
@@ -109,7 +109,7 @@ class NewModal extends React.Component {
             ) : (
               <View>
                   <View style={{borderColor: 'black', width: 240, height: 320, marginLeft: 'auto', marginRight: 'auto', marginTop: 30}} >
-                    {this.state.secondPicture ? <Image source={{uri: this.state.secondPicture}} style={{width: 240, height: 320}}/> : 
+                    {this.state.secondPicture ? <Image source={{uri: this.state.secondPicture}} style={{width: 240, height: 320}}/> :
                     <Text>Take or choose the second picture</Text>}
                   </View>
                   <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'center'}}>
@@ -120,7 +120,7 @@ class NewModal extends React.Component {
                       <Icon name='ios-folder' />
                     </Button>
                   </View>
-                  <Button success onPress={() => this.handleDoneClick()} 
+                  <Button success onPress={() => this.handleDoneClick()}
                     style={{marginTop: 60, width: 120, height: 40, marginLeft: 'auto', marginRight: 'auto'}}>
                     <Text style={{marginLeft: 'auto', marginRight: 'auto'}}> Done </Text>
                   </Button>
@@ -141,7 +141,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch({type: 'CLOSE_MODAL'}),
-    uploadPictures: (first, second) => uploadPicturesThunk(first, second)(dispatch)
+    uploadPictures: (first, second, id) => uploadPicturesThunk(first, second, id)(dispatch)
     // goToNext: () => dispatch({type:'NEXT_MODAL'})
   }
 }
