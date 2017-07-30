@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models.js');
+var _ = require('underscore');
 var Card = models.Card;
 var User = models.Card;
 //////////////////////////////// PUBLIC ROUTES ////////////////////////////////
@@ -10,18 +11,60 @@ router.get('/', function(req, res, next) {
   res.json({test: 'test'});
 });
 
-router.post('/getCards', function(req, res, next) {
-  var username = req.body.username;
-  User.findOne({username: username}, function(err, user) {
+
+// this has not been tested yet
+router.post('/getUser', function(req, res, next) {
+  var facebookId = req.body.facebookId;
+  User.findOne({facebookId: facebookId}, function(err, user) {
     if(!user) {
       var newUser = new User({
-
+        facebookId: facebookId,
+        name: null,
+        // age: null,
+        // location: null,
+        // gender: null,
+        myCards: [],
+        stylePoints: 0,
+        history: []
       });
+      newUser.save(function(err) {
+        if(err) {
+          console.log('The user failed to save', err);
+        }
+
+      })
+      res.json(user);
     }
-
-
+     else {
+      res.json(user);
+    }
   });
 });
+
+// router.post('/getTenCards', function(req, res, next) {
+//   // user --> user viewed cards && user posted cards
+//   // all cards --> take cards not in user cards
+//   // return random of those random cards
+//   var facebookId = req.body.facebookId
+//   var cards = Card.find({}, function(err, cards) {
+//     return cards
+//   });
+//   User.find({facebookId: facebookId}, function(err, user) {
+//     // if statement passes if the user has no cards
+//     if(user.myCards.length === 0 && user.history.length === 0) {
+//       var shuffledCards = _.shuffle(cards);
+//       var tenCards = shuffledCards.slice(0, 10);
+//       res.json(tenCards);
+//     } else {
+//       var cardIds = cards.map(function(card) {
+//         return card._id;
+//       })
+//       var usersCards = user.myCards;
+//       var userSeenCards = user.history;
+//     }
+//   })
+//
+// })
 
 router.get('/uploadCard', function(req, res, next) {
   var newCard = new Card({
