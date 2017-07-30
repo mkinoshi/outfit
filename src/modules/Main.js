@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, Button, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions } from 'react-native';
 import {getUserThunk} from '../thunks/getUserThunk';
+import Header from './Header.js';
+const {height, width} = Dimensions.get('window');
 import VoterMain from './Voter/Voter_index';
-
 class Main extends React.Component {
   componentDidMount() {
     //access to userId
@@ -16,7 +17,13 @@ class Main extends React.Component {
   }
   render() {
     return (
+      <View style={{width: width}}>
+        <Header style={{top: '0'}}/>
+        <View style={styles.outer}>
+          <Text>This is main</Text>
+        </View>
       <VoterMain style={styles.outer}/>
+      </View>
     )
   }
 }
