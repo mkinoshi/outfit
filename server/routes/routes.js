@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require('../models.js');
 var _ = require('underscore');
 var Card = models.Card;
-var User = models.Card;
+var User = models.User;
 //////////////////////////////// PUBLIC ROUTES ////////////////////////////////
 // Users who are not logged in can see these routes
 
