@@ -1,14 +1,17 @@
-const LoginReducer = (state = {
+const userReducer = (state = {
   user: {},
   isLoggedIn: true,
   facebookId: ''
 }, action) => {
   switch(action.type) {
     case 'GET_USER_DATA_DONE':
+      console.log('inside the user reducer');
+      console.log(action)
       return {
         ...state,
         isLoggedIn: true,
-        facebookId: action.userId
+        facebookId: action.userId,
+        name: action.name
       };
     case 'OPEN_LOGIN':
       return {
@@ -17,9 +20,16 @@ const LoginReducer = (state = {
       }
     case 'GET_USER_DATA_ERROR':
       return state;
+    case 'LOAD_USER_DONE':
+      return {
+        ...state,
+        user: action.data
+      }
+    case 'LOAD_USER_ERROR':
+      return state;
     default:
       return state;
   }
 }
 
-export default LoginReducer;
+export default userReducer;
