@@ -81,11 +81,38 @@ router.post('/vote', function(req, res, next) {
   var userId = req.body.userId;
 })
 
-router.get('/uploadCard', function(req, res, next) {
+router.post('/uploadcard', function(req, res, next) {
+  console.log("this is req.body in post/uploadcard", req.body)
   var newCard = new Card({
-    // enter cool card information right here
-    // card contains two different pictures
+    author: req.body.userId,
+    dateCreated: Date.now(),
+    finalDecision: 0, // what the poster decided, 0 is undecided 1 is first choice, 2 is second choice
+    imageA: req.body.imageA,
+    imageB: req.body.imageB,
+    votesA: [], // userIds
+    votesB: [],  // userIDs
+    views: [],
   });
+  newCard.save(function(err){
+    if(err){
+      res.json({success: false});
+    } else {
+      res.json({success: true});
+    }
+  })
+})
+
+router.get('/getcard', function(req, res, next){
+  var id = req.params.match.id;
+  console.log("this is req.params.match.id");
+  Card.findOne({_id: id}, function(err, card){
+    if(err){
+      console.log("error getting card:", err);
+      res.json({success: false});
+    } else {
+      res.json({card: card})
+    }
+  })
 })
 
 router.post('/voteCard', function(req, res, next) {
