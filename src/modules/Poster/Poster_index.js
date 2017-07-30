@@ -74,7 +74,9 @@ const styles = StyleSheet.create({
   }, 
   outfit: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center', 
+    marginLeft: 5, 
+    marginRight: 5
   },
   image: {
     width: 126, 

@@ -1,23 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, Modal, TouchableHighlight, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, Modal, TouchableHighlight, Dimensions, Image } from 'react-native';
 import { Constants } from 'expo';
-import { StackNavigator } from 'react-navigation';
-// import Main from '../Main';
-// import VoterResultsMain from '../VoterResults/VoterResults_index'
 const {height, width} = Dimensions.get('window');
 
-class StylePoints extends React.Component {
+class VoterResultsBanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false
     };
   }
-
-  static navigationOptions = {
-    title: 'Voter Results',
-  };
-
   componentDidMount() {
     //access to userId
     //this.props.getOrCreate(this.props.facebookId, this.props.name)
@@ -39,10 +31,10 @@ class StylePoints extends React.Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          // style={}
+          style={{marginTop: 60}}
           maxHeight={height-60}
           >
-         <View style={styles.container}>
+         <View style={{marginTop: 260}}>
           <View>
 
             <TouchableHighlight onPress={() => {
@@ -51,9 +43,7 @@ class StylePoints extends React.Component {
               <Text style={{textAlign: 'right'}}>X</Text>
             </TouchableHighlight>
 
-            <TouchableOpacity style={styles.container}
-              onPress={() => this.props.navigate()}
-            >
+            <View style={styles.container}>
               <View style={styles.card}> 
                <View style={styles.outfit}>
                 <Image
@@ -71,7 +61,6 @@ class StylePoints extends React.Component {
                 <Text style={styles.text}>55%</Text>
               </View>  
               </View>
-              </TouchableOpacity>
               <View style={styles.card}> 
                   <View style={styles.outfit}>
                     <Image
@@ -88,6 +77,8 @@ class StylePoints extends React.Component {
                     <Text style={styles.text}>27%</Text>
                   </View>
               </View>
+            </View>
+
           </View>
          </View>
         </Modal>
@@ -107,18 +98,17 @@ class StylePoints extends React.Component {
   }
 }
 
-
 const styles = {
-container: {
-    marginTop: 60,
+  container: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center'
   }, 
   card: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     width: 300, 
     height: 230, 
     backgroundColor: 'white', 
@@ -126,21 +116,18 @@ container: {
     borderColor: '#51a2ff',
     borderRadius: 10,
     borderWidth: 1.5,
-    marginTop: 2, 
-    marginBottom: 2, 
+    marginTop: 7, 
+    marginBottom: 7, 
     paddingTop: 12, 
     paddingLeft: 7, 
     paddingRight: 7, 
     backgroundColor: 'rgba(208, 22, 22, 0.25)'
-    // green: rgba(82, 255, 87, 0.42)
+    // 
     // rgba(22, 208, 81, 0.25)
     // 
   }, 
   outfit: {
     display: 'flex',
-    alignItems: 'center', 
-    marginLeft: 5, 
-    marginRight: 5
   },
   image: {
     width: 123, 
@@ -169,4 +156,4 @@ container: {
   }
 }
 
-export default StylePoints;
+export default VoterResultsBanner;

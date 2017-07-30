@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions } from 'react-native';
-import Card from './Voter_card';
-import StylePoints from './Voter_style_points';
+import VoterResultsCard from './VoterResults_Card';
+import VoterResultsBanner from './VoterResults_Banner';
 
 const {height, width} = Dimensions.get('window');
 
@@ -17,22 +17,21 @@ class VoterMain extends React.Component {
     // }
   }
   render() {
-  	console.log('got to VoterMain');
     return (
       <View style={styles.outer}>
-  	    <Card style={styles.card}/>
-  	    <StylePoints style={styles.stylePoints} navigate={() => this.props.navigate()}/>
+        <VoterResultsCard style={styles.card}/>
+        <VoterResultsBanner style={styles.stylePoints} navigate={() => this.props.navigate()}/>
       </View>
     )
   }
 }
 
 const styles = {
-	outer: {
+  outer: {
     top: 60,
     height: height-60,
-		width: width
-	}
+    width: width
+  }
 }
 
 const mapStateToProps = (state) => ({
