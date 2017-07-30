@@ -5,8 +5,6 @@ const userReducer = (state = {
 }, action) => {
   switch(action.type) {
     case 'GET_USER_DATA_DONE':
-      console.log('inside the user reducer');
-      console.log(action)
       return {
         ...state,
         isLoggedIn: true,
@@ -38,6 +36,14 @@ const userReducer = (state = {
         user: {
           ...state.user,
           history: state.user.history.concat([action.card])
+        }
+      }
+    case 'UPDATE_MY_POSTS':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          myCards: state.user.myCards.concat([action.card])
         }
       }
     default:

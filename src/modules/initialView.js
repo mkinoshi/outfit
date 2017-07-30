@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Button, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, Dimensions, Image } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux';
 import {LoginThunk} from '../thunks/LoginThunk';
 import Main from './Main.js';
+const {height, width} = Dimensions.get('window');
 
 class InitView extends React.Component {
   constructor(props) {
@@ -12,8 +13,6 @@ class InitView extends React.Component {
   componentWillMount() {
     AsyncStorage.getItem('user')
     .then((user) => {
-      console.log("yoyoyoyoyoyoy")
-      console.log(user);
       const data = JSON.parse(user);
       if (data) {
         // this.props.onLogin(data); // access to database ?
@@ -34,12 +33,15 @@ class InitView extends React.Component {
       <View>
         {this.props.isLoggedIn ? 
         <Main />:
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Button
-          onPress={() => this.props.onLogin()}
-          title="Continue with fb"
-          color="#4267B2"
-        />
+        <View style={{width: width, height: height}}>
+          <View style={{marginLeft: 70, marginRight: 100, marginTop: 250}}>
+            <Image source={{url: 'http://i.imgur.com/GCCxcZZ.png'}} style={{width: 250, height: 120}}/>
+            <Button
+            onPress={() => this.props.onLogin()}
+            title="Continue with FB"
+            color="#4267B2"
+          />
+          </View>
         </View>
         }
       </View>
