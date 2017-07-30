@@ -15,7 +15,8 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'voter'
+      page: 'voter',
+      cardId: ''
     }
   }
   // static navigationOptions = {
@@ -61,11 +62,13 @@ class Main extends React.Component {
     }
   }
 
-  myCardsToggle() {
+  myCardsToggle(cardId) {
     if (this.state.page === 'posterResults') {
       this.setState({page: 'poster'});
     } else {
-      this.setState({page: 'posterResults'})
+      this.setState({page: 'posterResults'});
+      this.setState({cardId: cardId});
+      console.log(cardId);
     }
   }
 
@@ -83,7 +86,7 @@ class Main extends React.Component {
           null
         }
         {this.state.page === 'poster' ?
-          <PosterMain navigate={() => this.myCardsToggle()}/>
+          <PosterMain navigate={(cardId) => this.myCardsToggle(cardId)}/>
             :
           null
         }
@@ -93,7 +96,7 @@ class Main extends React.Component {
           null
         }
         {this.state.page === 'posterResults' ?
-          <PosterResultsMain />
+          <PosterResultsMain cardId={this.state.cardId}/>
             :
           null
         }
