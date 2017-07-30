@@ -9,6 +9,7 @@ import PosterMain from './Poster/Poster_index';
 import VoterResultsMain from './VoterResults/VoterResults_index';
 import PosterResultsMain from './PosterResults/PosterResults_index';
 import NewModal from './Modal.js';
+import {getCardThunk} from '../thunks/getCardThunk';
 
 class Main extends React.Component {
   constructor(props) {
@@ -27,9 +28,11 @@ class Main extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.facebookId) {
       nextProps.getOrCreate(nextProps.facebookId, nextProps.name)
+    } 
+    if (nextProps.id) {
+      nextProps.getCard(nextProps.id);
     }
   }
 
@@ -103,11 +106,13 @@ const styles = {
 const mapStateToProps = (state) => ({
   facebookId: state.userReducer.facebookId,
   name: state.userReducer.name,
-  isOpen: state.modalReducer.isModalOpen
+  isOpen: state.modalReducer.isModalOpen,
+  id: state.userReducer.user._id
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOrCreate: (userId, name) => getUserThunk(userId, name)(dispatch),
+  getCard: (id) => getCardThunk(id)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
