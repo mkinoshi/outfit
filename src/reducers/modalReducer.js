@@ -7,6 +7,11 @@ const modalReducer = (state = {
         ...state,
         isModalOpen: true
       }
+    case 'CLOSE_MODAL':
+      return {
+        ...state,
+        isModalOpen: false
+      }
     default:
       return state;
   }

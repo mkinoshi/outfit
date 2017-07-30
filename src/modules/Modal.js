@@ -17,7 +17,7 @@ import {Button} from 'native-base';
 import _ from 'underscore';
 import { connect } from 'react-redux';
 import { ImagePicker } from 'expo';
-
+import {uploadPicturesThunk} from '../thunks/uploadPicturesThunk'
 class NewModal extends React.Component {
   constructor(props) {
     super(props);
@@ -41,7 +41,8 @@ class NewModal extends React.Component {
   }
 
   handleDoneClick() {
-    this.props.closeModal(this.props.id, this.state.rate, this.state.content);
+    this.props.closeModal();
+    this.props.uploadPictures();
   }
 
   handleCamera() {
@@ -140,7 +141,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // closeModal: (id, rate, content) => dispatch(closeModal(id, rate, content)),
+    closeModal: () => dispatch({type: 'CLOSE_MODAL'}),
+    uploadPictures: (first, second) => uploadPicturesThunk(first, second)(dispatch)
     // goToNext: () => dispatch({type:'NEXT_MODAL'})
   }
 }
