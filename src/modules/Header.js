@@ -4,6 +4,7 @@ import {Image} from 'react-native';
 import { ImagePicker } from 'expo';
 import { connect } from 'react-redux';
 
+
 class Main extends React.Component { 
 
   handleModal() {
@@ -28,7 +29,7 @@ class Main extends React.Component {
 
   render() {
     return (
-       <Container style={{top: 0}}>
+       <Container style={{top: 0, zIndex: 5}}>
         <Header style={{backgroundColor: 'white'}}>
           <Left>
             <Button transparent>
@@ -37,7 +38,7 @@ class Main extends React.Component {
           </Left>
           <Body>
             <Button style={{backgroundColor: 'white'}}>
-              <Image style={{height: 60, width: 60}} source={{uri: 'http://i.imgur.com/zW9gewW.png'}}/>
+              <Image style={{width: 140}} source={require('../../assets/Logo.jpeg')}/>
             </Button>
           </Body>
           <Right>
