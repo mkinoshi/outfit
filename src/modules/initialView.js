@@ -16,7 +16,7 @@ class InitView extends React.Component {
       console.log(user);
       if (user) {
         // this.props.onLogin(data); // access to database ?
-        this.props.setLogin(user);
+        this.props.setLogin(user.id, user.name);
         // this.props.getOrCreate(user, null, null);
       } else {
         this.props.openLogin();
@@ -30,7 +30,7 @@ class InitView extends React.Component {
   render() {
     console.log(this.props);
     return(
-      <View>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {this.props.isLoggedIn ? 
         <Main />:
         <Button
@@ -45,11 +45,11 @@ class InitView extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.LoginReducer
+  isLoggedIn: state.userReducer.isLoggedIn
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setLogin: (userId) => dispatch({type: 'GET_USER_DATA_DONE', userId: userId}),
+  setLogin: (userId, name) => dispatch({type: 'GET_USER_DATA_DONE', userId: userId, name: name}),
   onLogin: () => LoginThunk(dispatch),
   openLogin: () => dispatch({type: 'OPEN_LOGIN'})
 });

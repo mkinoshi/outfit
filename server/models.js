@@ -13,7 +13,7 @@ var userSchema = new Schema({
     location: String,
     gender: String,
     myCards: [
-        card: {
+        {
             ref: 'Card',
             type: Schema.Types.ObjectId
         }

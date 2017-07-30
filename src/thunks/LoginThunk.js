@@ -15,8 +15,8 @@ export const LoginThunk = (dispatch) => {
   .then((resp) => {
     console.log(resp);
     console.log(resp.id);
-    AsyncStorage.setItem('user', JSON.stringify(resp.id));
-    dispatch({type: 'GET_USER_DATA_DONE', userId: resp.id})
+    AsyncStorage.setItem('user', JSON.stringify(resp));
+    dispatch({type: 'GET_USER_DATA_DONE', userId: resp.id, name: resp.name})
   })
   .catch((err) => {
     dispatch({type: 'GET_USER_DATA_ERROR'});
