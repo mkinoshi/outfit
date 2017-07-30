@@ -137,7 +137,8 @@ router.post('/uploadcard', function(req, res, next) {
     function(response) {
       var sfwVal = response.outputs[0].data.concepts[0].value;
       if(sfwVal < 0.7) {
-        res.json({success: false})
+        res.json({success: false});
+        return next();
       }
     },
     function(err) {
@@ -149,6 +150,7 @@ router.post('/uploadcard', function(req, res, next) {
       var sfwVal = response.outputs[0].data.concepts[0].value;
       if(sfwVal < 0.7) {
         res.json({success: false})
+        return next();
       }
     },
     function(err) {
