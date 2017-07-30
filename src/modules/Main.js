@@ -18,8 +18,17 @@ class Main extends React.Component {
     return (
       <View style={{width: width}}>
         <Header style={{top: '0'}}/>
+        <View style={styles.outer}>
+          <Text>This is main</Text>
+        </View>
       </View>
     )
+  }
+}
+
+const styles = {
+  outer: {
+    marginTop: 50
   }
 }
 
