@@ -6,12 +6,20 @@ import {Provider} from 'react-redux';
 import {logger} from 'redux-logger';
 import InitView from './src/modules/initialView';
 import rootReducer from './src/reducers/index';
+// import StackNavigator from 'react-navigation';
+import Main from './src/modules/Main';
+import PosterMain from './src/modules/Poster/Poster_index';
 
 const store = createStore(rootReducer);
 
 const ROUTES = {
   initView: InitView
 }
+
+// const SimpleApp = StackNavigator({
+//   Home: { screen: Main },
+//   Poster: { screen: PosterMain },
+// });
 
 
 export default class App extends React.Component {

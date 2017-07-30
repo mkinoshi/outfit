@@ -5,9 +5,27 @@ import {getUserThunk} from '../thunks/getUserThunk';
 import Header from './Header.js';
 const {height, width} = Dimensions.get('window');
 import VoterMain from './Voter/Voter_index';
+import PosterMain from './Poster/Poster_index';
 import NewModal from './Modal.js';
+import { StackNavigator } from 'react-navigation';
+
+// const SimpleApp = StackNavigator({
+//   Home: { screen: Main },
+//   // VoterResults: { screen:  },
+//   // PosterResults: { screen: Poster}
+// });
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 'voter'
+    }
+  }
+  // static navigationOptions = {
+  //   title: 'Voter',
+  // };
+
   componentDidMount() {
     //access to userId
     //this.props.getOrCreate(this.props.facebookId, this.props.name)
@@ -21,12 +39,24 @@ class Main extends React.Component {
     }
   }
 
+  onLogoClick() {
+    if (this.state.page === 'voter') {
+      this.setState({page: 'poster'});
+    } else {
+      this.setState({page: 'voter'});
+    }
+  }
+
   render() {
-    console.log(this.props);
+    console.log(this.state.page);
     return (
       <View >
-        <Header style={{top: '0'}}/>
-        <VoterMain style={{top: '80'}}/>
+        <Header style={{top: '0'}} onLogoClick={() => this.onLogoClick()}/>
+        {this.state.page === 'voter' ?
+          <VoterMain style={{top: '80'}}/>
+            :
+          <PosterMain />
+        }
         {this.props.isOpen ? <NewModal /> :null}
       </View>
     )

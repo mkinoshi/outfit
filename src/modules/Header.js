@@ -30,15 +30,15 @@ class Main extends React.Component {
   render() {
     return (
        <Container style={{top: 0, zIndex: 5}}>
-        <Header style={{backgroundColor: 'white'}}>
+        <Header style={{backgroundColor: 'white'}} >
           <Left>
             <Button transparent>
               {/* <Icon name='arrow-back' /> */}
             </Button>
           </Left>
           <Body>
-            <Button style={{backgroundColor: 'white'}}>
-              <Image style={{width: 140}} source={require('../../assets/Logo.jpeg')}/>
+            <Button style={{backgroundColor: 'white'}} onPress={() => this.props.onLogoClick()}>
+                <Image style={{width: 140}} source={require('../../assets/Logo.jpeg')}/>
             </Button>
           </Body>
           <Right>
