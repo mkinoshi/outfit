@@ -26,6 +26,7 @@ class VoterMain extends React.Component {
         incrementCard={(cardId) => this.props.vote(cardId,this.props.id, 0)}
         voteCard={(cardId, voteId) => this.props.vote(cardId, this.props.id, voteId)} />
   	    <StylePoints style={styles.stylePoints}/>
+  	    <StylePoints style={styles.stylePoints} navigate={() => this.props.navigate()}/>
       </View>
     )
   }

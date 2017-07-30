@@ -33,17 +33,22 @@ class Main extends React.Component {
   } 
 
   render() {
+    let backArrow = false;
+    if ((this.props.page === 'voterResults') || (this.props.page === 'posterResults')) {
+      backArrow = true;
+      console.log('went in here');
+    }
     return (
        <Container style={{top: 0, zIndex: 5}}>
-        <Header style={{backgroundColor: 'white'}}>
+        <Header style={{backgroundColor: 'white'}} >
           <Left>
-            <Button transparent onPress={() => this.handleLogout()}>
-               <Icon name='ios-log-out' style={{fontSize: 24}}/> 
+            <Button transparent onPress={() => this.props.handleBack()}>
+              {backArrow ? <Icon name='arrow-back' /> : <Icon name='ios-log-out' style={{fontSize: 24}}/> }
             </Button>
           </Left>
           <Body>
-            <Button style={{backgroundColor: 'white'}}>
-              <Image style={{width: 140}} source={require('../../assets/Logo.jpeg')}/>
+            <Button style={{backgroundColor: 'white'}} onPress={() => this.props.onLogoClick()}>
+                <Image style={{width: 140}} source={require('../../assets/Logo.jpeg')}/>
             </Button>
           </Body>
           <Right>

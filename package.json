@@ -17,6 +17,7 @@
     "react-native-facebook-login": "^1.5.0",
     "react-native-swipe-gestures": "^1.0.2",
     "react-native-swiper": "^1.5.4",
+    "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
     "react-router-redux": "^4.0.8",
     "redux": "^3.7.2",

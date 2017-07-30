@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, Modal, TouchableHighlight, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, Modal, TouchableHighlight, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
+import { StackNavigator } from 'react-navigation';
+// import Main from '../Main';
+// import VoterResultsMain from '../VoterResults/VoterResults_index'
 const {height, width} = Dimensions.get('window');
 
 class StylePoints extends React.Component {
@@ -10,6 +13,7 @@ class StylePoints extends React.Component {
       modalVisible: false
     };
   }
+
   componentDidMount() {
     //access to userId
     //this.props.getOrCreate(this.props.facebookId, this.props.name)
@@ -31,10 +35,10 @@ class StylePoints extends React.Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          style={{marginTop: 60}}
+          // style={}
           maxHeight={height-60}
           >
-         <View style={{marginTop: 260}}>
+         <View style={styles.container}>
           <View>
 
             <TouchableHighlight onPress={() => {
@@ -43,7 +47,9 @@ class StylePoints extends React.Component {
               <Text style={{textAlign: 'right'}}>X</Text>
             </TouchableHighlight>
 
-            <View style={styles.container}>
+            <TouchableOpacity style={styles.container}
+              onPress={() => this.props.navigate()}
+            >
               <View style={styles.card}> 
                <View style={styles.outfit}>
                 <Image
@@ -61,6 +67,7 @@ class StylePoints extends React.Component {
                 <Text style={styles.text}>55%</Text>
               </View>  
               </View>
+              </TouchableOpacity>
               <View style={styles.card}> 
                   <View style={styles.outfit}>
                     <Image
@@ -77,8 +84,6 @@ class StylePoints extends React.Component {
                     <Text style={styles.text}>27%</Text>
                   </View>
               </View>
-            </View>
-
           </View>
          </View>
         </Modal>
@@ -98,17 +103,18 @@ class StylePoints extends React.Component {
   }
 }
 
+
 const styles = {
-  container: {
+container: {
+    marginTop: 60,
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center'
   }, 
   card: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: 300, 
     height: 230, 
     backgroundColor: 'white', 
@@ -116,18 +122,21 @@ const styles = {
     borderColor: '#51a2ff',
     borderRadius: 10,
     borderWidth: 1.5,
-    marginTop: 7, 
-    marginBottom: 7, 
+    marginTop: 2, 
+    marginBottom: 2, 
     paddingTop: 12, 
     paddingLeft: 7, 
     paddingRight: 7, 
     backgroundColor: 'rgba(208, 22, 22, 0.25)'
-    // 
+    // green: rgba(82, 255, 87, 0.42)
     // rgba(22, 208, 81, 0.25)
     // 
   }, 
   outfit: {
     display: 'flex',
+    alignItems: 'center', 
+    marginLeft: 5, 
+    marginRight: 5
   },
   image: {
     width: 123, 

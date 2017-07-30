@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet,  Image } from 'react-native';
 import { Constants } from 'expo';
 
-export default class App extends Component {
+class PosterMain extends Component {
+  // static navigationOptions = {
+  //   title: 'Poster',
+  // };
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -45,17 +50,15 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 60,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight
-    
+    // justifyContent: 'center',
+    alignItems: 'center'
   }, 
   card: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'start',
     width: 300, 
     height: 230, 
     backgroundColor: 'white', 
@@ -71,7 +74,9 @@ const styles = StyleSheet.create({
   }, 
   outfit: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center', 
+    marginLeft: 5, 
+    marginRight: 5
   },
   image: {
     width: 126, 
@@ -83,3 +88,5 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+
+export default PosterMain;
