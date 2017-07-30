@@ -15,8 +15,16 @@ class Main extends React.Component {
   }
   render() {
     return (
-      <Text>This is main</Text>
+      <View style={styles.outer}>
+        <Text>This is main</Text>
+      </View>
     )
+  }
+}
+
+const styles = {
+  outer: {
+    marginTop: 50
   }
 }
 
