@@ -90,10 +90,6 @@ router.post('/vote', function(req, res, next) {
   var userId = req.body.userId;
   var vote = req.body.vote;
 
-  console.log(cardId);
-  console.log(userId);
-  console.log(vote);
-
   User.findById(userId, function(err, user) {
     if(err) {
       console.log('there was an error', err);
@@ -101,7 +97,6 @@ router.post('/vote', function(req, res, next) {
     if(!user) {
       res.json({success: false})
     } else {
-      console.log('we got here');
       // pushes user histoy to
       var voteObj = {
         card: cardId,
