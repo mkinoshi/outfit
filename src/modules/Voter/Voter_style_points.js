@@ -23,7 +23,7 @@ class StylePoints extends React.Component {
 const styles = {
   stylePoints: {
     backgroundColor: 'red',
-    flex: 1,
+    height: 60,
     borderWidth: 2,
     borderColor: 'purple',
     justifyContent: 'center',
