@@ -1,5 +1,7 @@
 import { RNS3 } from 'react-native-aws3';
 import axios from 'axios';
+const dbURL = 'https://vast-beach-20437.herokuapp.com';
+
 export const uploadPicturesThunk = (first, second, id) => (dispatch) => {
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -41,17 +43,15 @@ export const uploadPicturesThunk = (first, second, id) => (dispatch) => {
       awsURL: "https://console.aws.amazon.com/s3/buckets/horizons-hackathon-snackchat/?region=us-east-1&tab=overview",
       successActionStatus: 201
     }
-    console.log(process.env.AWS_ACCESS_KEY);
     RNS3.put(file, options).then((resp) => {
       if (resp.status !== 201) {
           throw new Error("Failed to upload image to S3");
       }
       console.log("this is AWS RESPONSE:", resp);
-      axios.post('/uploadcard', {
-        author: req.body.userId,
-        finalDecision: 0, // what the poster decided, 0 is undecided 1 is first choice, 2 is second choice
-        imageA: response.body.location,
-        imageB: resp.body.location,
+      axios.post(dbURL + '/uploadcard', {
+        userId: id,
+        imageA: response.body.postResponse.location,
+        imageB: resp.body.postResponse.location,
       })
       .then((resp) => {
         console.log(resp);

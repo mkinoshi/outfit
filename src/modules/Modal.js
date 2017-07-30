@@ -134,7 +134,7 @@ class NewModal extends React.Component {
                <View>
                   <View style={{borderColor: 'black', width: 240, height: 320, marginLeft: 'auto', marginRight: 'auto', marginTop: 30}} >
                     {this.state.firstPicture ? <Image source={{uri: this.state.firstPicture}} style={{width: 240, height: 320}}/> : 
-                    <Text>Take or choose the first picture</Text>}
+                    <Text style={{marginTop: 150, marginLeft: 15}}>Take or choose the first picture</Text>}
                   </View>
                   <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'space-around'}}>
                     <Button onPress={() => this.handleCamera()}>
@@ -152,7 +152,7 @@ class NewModal extends React.Component {
               <View>
                   <View style={{borderColor: 'black', width: 240, height: 320, marginLeft: 'auto', marginRight: 'auto', marginTop: 30}} >
                     {this.state.secondPicture ? <Image source={{uri: this.state.secondPicture}} style={{width: 240, height: 320}}/> : 
-                    <Text>Take or choose the second picture</Text>}
+                    <Text style={{marginTop: 150, marginLeft: 15}}>Take or choose the second picture</Text>}
                   </View>
                   <View style={{flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'space-around'}}>
                     <Button onPress={() => this.handleCamera2()}>
