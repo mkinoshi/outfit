@@ -5,6 +5,8 @@ import {getUserThunk} from '../thunks/getUserThunk';
 import Header from './Header.js';
 const {height, width} = Dimensions.get('window');
 import VoterMain from './Voter/Voter_index';
+import NewModal from './Modal.js';
+
 class Main extends React.Component {
   componentDidMount() {
     //access to userId
@@ -18,10 +20,12 @@ class Main extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <View >
         <Header style={{top: '0'}}/>
         <VoterMain style={{top: '80'}}/>
+        {this.props.isOpen ? <NewModal /> :null}
       </View>
     )
   }
@@ -37,7 +41,8 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   facebookId: state.userReducer.facebookId,
-  name: state.userReducer.name
+  name: state.userReducer.name,
+  isOpen: state.modalReducer.isFirstOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({

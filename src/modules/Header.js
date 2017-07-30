@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
 import {Image} from 'react-native';
 import { ImagePicker } from 'expo';
+import { connect } from 'react-redux';
 
-export default class Main extends React.Component { 
+class Main extends React.Component { 
 
-  handlecamera() {
+  handleModal() {
+    this.props.openModal();
     // console.log('you are taking a camera');
     // takeImage = async () => {
     //   let result = await ImagePicker.launchCameraAsync({
@@ -26,7 +28,7 @@ export default class Main extends React.Component {
 
   render() {
     return (
-       <Container style={{top: 0, flex: 1}}>
+       <Container style={{top: 0}}>
         <Header style={{backgroundColor: 'white'}}>
           <Left>
             <Button transparent>
@@ -39,7 +41,7 @@ export default class Main extends React.Component {
             </Button>
           </Body>
           <Right>
-            <Button transparent onPress={() => this.handlecamera()}>
+            <Button transparent onPress={() => this.handleModal()}>
               <Icon name='camera' />
             </Button>
           </Right>
@@ -48,3 +50,14 @@ export default class Main extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  openModal: () => {
+    dispatch({type: 'OPEN_FIRST_MODAL'});
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
