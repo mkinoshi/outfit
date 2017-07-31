@@ -255,6 +255,110 @@ router.get('/getmycards/:id', function(req, res, next){
 })
 
 
+router.post('/getmyhistory', function(req, res, next){
+  var id = req.body.id;
+  var id = req.body.id;
+  console.log("this is id", id);
+
+  User.findById(id, function(err, user){
+    if(err){
+      console.log("error:", err);
+    } else {
+      console.log("user", user);
+      var noSkipsArray = [];
+      console.log("history", user.history);
+      user.history.forEach((cardObj) => {
+        if(cardObj.myVote !== 0){
+          noSkipsArray.push(cardObj._id);
+        }
+      });
+      console.log("noSkipsArr", noSkipsArray);
+      arrayPromises = noSkipsArray.map((cardId) => {
+        return Card.findById(cardId)
+      })
+      // console.log("array promises", arrayPromises);
+      Promise.all(arrayPromises).then((results) => {
+        // console.log("this is arrayPromises results", results);
+        console.log("results", results);
+        var returnArray = [];
+        for(var i = 0; i < results.length; i++){
+          if(results[i].finalDecision !== 0 && noSkipsArray[i].myVote !== 0){
+            returnArray.push(results[i]);
+            console.log("returnArray", returnArray);
+          }
+        }
+        res.json({cards: returnArray});
+      })
+    }
+  })
+})
+
+// User.findById(id, function(err, user) {
+//   if(err) {
+//     console.log('There was an errro', err);
+//     res.json({success: false})
+//   }
+//   else if(!user) {
+//     console.log('The user does not exist');
+//     res.json({success: false})
+//   } else {
+//     // there definitely is a user
+//     var userHistory = user.history.map(function(card) {
+//       if(card.myVote !== 0 && card.finalDecision !==) {
+//         return card
+//       }
+//     }).filter(function(card) {
+//       return card
+//     })
+//     console.log(userHistory);
+//     res.json({cards: userHistory})
+//   }
+// })
+
+
+
+
+
+// User.findById(id).populate('history.card').exec()
+// .then(user => {
+//   console.log("user", user);
+//   var tempArr = [];
+//   user.history.forEach(card => {
+//     if (card.myVote !== 0 && card.card.finalDecision !== 0){
+//       tempArr.push(card);
+//     }
+//   });
+//   res.json({cards: tempArray});
+// })
+// .catch(err => {
+//   console.log(err)
+// })
+
+
+  // function(err, user){
+  //   if(err){
+  //     console.log("error:", err);
+  //   } else {
+  //     console.log("user", user);
+  //
+  //     // User.find().popul
+  //     // Card.find({})
+  //     arrayPromises = arr.map((cardid) => {
+  //       return Card.findById(cardid)
+  //     })
+  //     Promise.all(arrayPromises).then((results) => {
+  //       // console.log("this is arrayPromises results", results);
+  //       for (var i = 0; i < results.length; i++){
+  //         if(results[i].finalDecision !== 0){
+  //           noSkips[i]
+  //         }
+  //       }
+  //       res.json({cards: tempArray});
+  //     })
+  //   }
+  // })
+
+
   // .then((user) => {
   //   console.log("user", user);
   //   arrayPromises = user.myCards.map((cardId) => {
