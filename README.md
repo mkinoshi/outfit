@@ -11,5 +11,4 @@ Hope you like our product!
 
 ## AngelHack Silicon Valley 2017 finalist
 This product uses:
-React Native
-React Redux
+React Native, React Redux
